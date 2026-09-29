@@ -1,0 +1,24 @@
+# Table 3, row 12: General / Full.
+index: 12
+name: "coco14_full"
+paper:
+  table: 3
+  row: 12
+  modification: "General"
+  algorithm: "Full"
+  dataset: "COCO14"
+  rounds: "100K"
+  learning_rate: "2.5e-5"
+driver: "train_dreambooth_continue_loss_study.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  data_dir: "${COCO_DATASET}"
+  learning_rate: "2.5e-5"
+  max_train_steps: 30000
+  integrity_interval: 1500
+  checkpointing_steps: 1500
+  checkpoints_total_limit: 20
+flags:
+  - "--full-tuning"

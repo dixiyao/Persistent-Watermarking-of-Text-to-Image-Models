@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/huggingface/diffusers",
+  "revision": "0377f0c1b34e3ff313d41edad1bd79c2ed8bb5ec",
+  "files_sha256": {
+    "train_dreambooth_lora_flux2_klein.py": "83bccc8c041496aa33939b6ff1f95d0929c1c71a9a29cdc64ecacd4a503fccfe",
+    "DIFFUSERS_LICENSE": "f9e2070c247517b1ddf65f7b11b393484a18da91a958fd18a97bd0f241c3125c"
+  }
+}

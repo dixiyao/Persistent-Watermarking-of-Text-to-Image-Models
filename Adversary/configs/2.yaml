@@ -1,0 +1,24 @@
+# Table 3, row 2: General / LoRA.
+index: 2
+name: "pokemon_lora"
+paper:
+  table: 3
+  row: 2
+  modification: "General"
+  algorithm: "LoRA"
+  dataset: "Pokemon BLIP"
+  rounds: "15K"
+  learning_rate: "1e-4"
+driver: "train_dreambooth_continue_styletransfer_pokemon.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  dataset_cache_dir: "${HF_HOME}/datasets"
+  learning_rate: "1e-4"
+  max_train_steps: 30000
+  integrity_interval: 1500
+  te_lora_target_modules: ""
+  checkpointing_steps: 1500
+  checkpoints_total_limit: 20
+flags: []

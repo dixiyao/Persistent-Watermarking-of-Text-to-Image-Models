@@ -1,0 +1,35 @@
+# Settings shared by every backbone.  These are the values used for the
+# "Ours" rows of the paper: combination 1 of the ablation grid in
+# batch_slurm_ablate_model.sh ("1.25 0.25 0 0").
+
+trigger:
+  # The placeholder that is baked into every prompt of the copyright set.
+  original_trigger_word: "[Z]*$"
+  # The rare-token phrase it is rewritten to.  One per protected subject -
+  # override on the command line with --current_trigger_word.
+  current_trigger_word: "Sunflower Wolf"
+
+loss:
+  reg_loss_weight: 1.25        # L_org
+  cp_ref_weight: 0.25          # L_cp-ref
+  lambda_watermarkdm: 0.0      # WatermarkDM term, off for Ours
+
+lora:
+  # Appendix A.1: T-LoRA rank 64, scaling alpha_LoRA = 32.  Which scheme a
+  # backbone uses is set per backbone below.
+  lora_alpha: 32
+
+roma:
+  enabled: false               # ablation only
+  alpha: 0.4
+  r: 0.05
+
+checkpointing:
+  checkpointing_steps: 500
+  checkpoints_total_limit: 4
+  auto_resume_latest: true
+  gradient_checkpointing: true
+
+runtime:
+  mixed_precision: bf16
+  max_grad_norm: 1

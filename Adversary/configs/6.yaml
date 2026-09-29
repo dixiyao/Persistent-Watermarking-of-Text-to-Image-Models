@@ -1,0 +1,116 @@
+# Table 3, row 6: Personalization / 5x LoRA.
+# No separate stage - the transformation is applied at decode time by
+# the evaluation harness, through the flags below.
+index: 6
+name: "personalization_5x_lora"
+paper:
+  table: 3
+  row: 6
+  modification: "Personalization"
+  algorithm: "5x LoRA"
+  dataset: "DreamBooth"
+  rounds: "1K x 5"
+  learning_rate: "1e-4"
+driver: null
+requires_two_models: false
+transform_only: false
+standalone_args: true
+args: {}
+flags: []
+stages:
+  - name: "stage_01_backpack"
+    script: "train_dreambooth_continue_personalization.py"
+    args:
+      instance_data_dir: "${DREAMBOOTH_ROOT}/backpack"
+      class_data_dir: "${OUT}/class_images/backpack"
+      instance_prompt: "a sks0 backpack"
+      class_prompt: "a backpack"
+      personalization_integrity_prompt: "a sks0 backpack"
+      resolution: 512
+      train_batch_size: 1
+      learning_rate: "1e-4"
+      rank: 16
+      lora_alpha: 32
+      step: 1000
+      integrity_interval: 50
+      checkpointing_steps: 250
+      checkpoints_total_limit: 4
+    flags:
+      - "--save_merged_final"
+  - name: "stage_02_backpack_dog"
+    script: "train_dreambooth_continue_personalization.py"
+    args:
+      instance_data_dir: "${DREAMBOOTH_ROOT}/backpack_dog"
+      class_data_dir: "${OUT}/class_images/backpack"
+      instance_prompt: "a sks1 backpack"
+      class_prompt: "a backpack"
+      personalization_integrity_prompt: "a sks1 backpack"
+      resolution: 512
+      train_batch_size: 1
+      learning_rate: "1e-4"
+      rank: 16
+      lora_alpha: 32
+      step: 1000
+      integrity_interval: 50
+      checkpointing_steps: 250
+      checkpoints_total_limit: 4
+    flags:
+      - "--save_merged_final"
+  - name: "stage_03_bear_plushie"
+    script: "train_dreambooth_continue_personalization.py"
+    args:
+      instance_data_dir: "${DREAMBOOTH_ROOT}/bear_plushie"
+      class_data_dir: "${OUT}/class_images/stuffed_animal"
+      instance_prompt: "a sks2 stuffed animal"
+      class_prompt: "a stuffed animal"
+      personalization_integrity_prompt: "a sks2 stuffed animal"
+      resolution: 512
+      train_batch_size: 1
+      learning_rate: "1e-4"
+      rank: 16
+      lora_alpha: 32
+      step: 1000
+      integrity_interval: 50
+      checkpointing_steps: 250
+      checkpoints_total_limit: 4
+    flags:
+      - "--save_merged_final"
+  - name: "stage_04_berry_bowl"
+    script: "train_dreambooth_continue_personalization.py"
+    args:
+      instance_data_dir: "${DREAMBOOTH_ROOT}/berry_bowl"
+      class_data_dir: "${OUT}/class_images/bowl"
+      instance_prompt: "a sks3 bowl"
+      class_prompt: "a bowl"
+      personalization_integrity_prompt: "a sks3 bowl"
+      resolution: 512
+      train_batch_size: 1
+      learning_rate: "1e-4"
+      rank: 16
+      lora_alpha: 32
+      step: 1000
+      integrity_interval: 50
+      checkpointing_steps: 250
+      checkpoints_total_limit: 4
+    flags:
+      - "--save_merged_final"
+  - name: "stage_05_can"
+    script: "train_dreambooth_continue_personalization.py"
+    args:
+      instance_data_dir: "${DREAMBOOTH_ROOT}/can"
+      class_data_dir: "${OUT}/class_images/can"
+      instance_prompt: "a sks4 can"
+      class_prompt: "a can"
+      personalization_integrity_prompt: "a sks4 can"
+      resolution: 512
+      train_batch_size: 1
+      learning_rate: "1e-4"
+      rank: 16
+      lora_alpha: 32
+      step: 1000
+      integrity_interval: 50
+      checkpointing_steps: 250
+      checkpoints_total_limit: 4
+    flags:
+      - "--save_merged_final"
+chain: "merged"

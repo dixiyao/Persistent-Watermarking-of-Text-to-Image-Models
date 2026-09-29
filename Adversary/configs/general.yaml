@@ -1,0 +1,39 @@
+# Settings shared by all 23 modifications.  These belong to the adversary,
+# not to the watermark, which is why they live here and not in
+# ../../Training/configs/.  continue.py reads only the model's identity
+# (base model, resolution, trigger words) from the Training config.
+#
+# Table 3 was run on Stable Diffusion, so these are its values.  Attacking
+# another backbone picks up the matching entry under backbones: below.
+
+runtime:
+  train_batch_size: 1
+  gradient_accumulation_steps: 4
+  max_grad_norm: 1
+  mixed_precision: "bf16"
+  integrity_inference_steps: 50
+  gradient_checkpointing: true
+  random_flip: true
+  auto_resume_latest: true
+
+# Per-backbone overrides, keyed by the Training config name.
+backbones:
+  amused:
+    train_batch_size: 8
+    gradient_accumulation_steps: 1
+  llamagen:
+    train_batch_size: 4
+    gradient_accumulation_steps: 1
+
+# PixArt's continuation trainer is the only one with a Muon path, and it
+# runs Muon on the 2-D weight matrices with AdamW on everything else.
+# Select it with --optimizer muon; it is refused on any other backbone.
+optimizer:
+  name: "adamw"                    # adamw | muon
+  muon:
+    learning_rate: "2e-4"          # Muon side
+    adamw_learning_rate: "2e-5"    # AdamW side
+    momentum: 0.95
+    ns_steps: 5
+  supported_backbones:
+    - pixart

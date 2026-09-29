@@ -1,0 +1,19 @@
+# Table 3, row 16: VAE replacement / Consistency.
+# No separate stage - the transformation is applied at decode time by
+# the evaluation harness, through the flags below.
+index: 16
+name: "vaechange_consistency"
+paper:
+  table: 3
+  row: 16
+  modification: "VAE replacement"
+  algorithm: "Consistency"
+  dataset: null
+  rounds: null
+  learning_rate: null
+driver: null
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args: {}
+flags: []

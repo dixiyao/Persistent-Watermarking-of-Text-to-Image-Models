@@ -1,0 +1,19 @@
+# Table 3, row 8: Quantization / Naive INT8.
+# No separate stage - the transformation is applied at decode time by
+# the evaluation harness, through the flags below.
+index: 8
+name: "quantization_int8"
+paper:
+  table: 3
+  row: 8
+  modification: "Quantization"
+  algorithm: "Naive INT8"
+  dataset: null
+  rounds: null
+  learning_rate: null
+driver: null
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args: {}
+flags: []

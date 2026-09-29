@@ -1,0 +1,26 @@
+# Table 3, row 19: Pruning / L1 Pruning + Full.
+index: 19
+name: "l1pruning"
+paper:
+  table: 3
+  row: 19
+  modification: "Pruning"
+  algorithm: "L1 Pruning + Full"
+  dataset: "COCO14"
+  rounds: "20K"
+  learning_rate: "1e-5"
+driver: "train_dreambooth_continue_loss_study.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  data_dir: "${COCO_DATASET}"
+  learning_rate: "1e-5"
+  max_train_steps: 20000
+  integrity_interval: 1000
+  checkpointing_steps: 500
+  checkpoints_total_limit: 20
+  pruning_method: "l1"
+  pruning_amount: 0.25
+flags:
+  - "--full-tuning"

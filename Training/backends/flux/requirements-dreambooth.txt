@@ -1,0 +1,18 @@
+# Isolated environment for the vendored official FLUX.2 Klein trainer.
+# Keep the repository-wide requirements.txt unchanged for existing experiments.
+diffusers @ git+https://github.com/huggingface/diffusers.git@0377f0c1b34e3ff313d41edad1bd79c2ed8bb5ec
+torch>=2.5
+torchvision
+transformers==5.17.0
+peft==0.21.0
+accelerate>=0.31.0
+datasets
+numpy
+pillow
+tqdm
+sentencepiece
+ftfy
+Jinja2
+tensorboard
+# Optional: bitsandbytes for --use_8bit_adam / NF4, torchao for --do_fp8_training,
+# prodigyopt for --optimizer prodigy, wandb for --report_to wandb.

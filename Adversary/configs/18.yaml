@@ -1,0 +1,29 @@
+# Table 3, row 18: Pruning / EdgeDiffusion.
+index: 18
+name: "iterative_taylor_pruning"
+paper:
+  table: 3
+  row: 18
+  modification: "Pruning"
+  algorithm: "EdgeDiffusion"
+  dataset: "COCO14"
+  rounds: "20K"
+  learning_rate: "1e-5"
+driver: "train_dreambooth_continue_loss_study.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  data_dir: "${COCO_DATASET}"
+  learning_rate: "1e-5"
+  max_train_steps: 20000
+  integrity_interval: 1000
+  checkpointing_steps: 500
+  checkpoints_total_limit: 20
+  pruning_method: "taylor"
+  pruning_amount: 0.07
+  pruning_calibration_batches: 8
+flags:
+  - "--full-tuning"
+iterative_rounds: 4
+chain: "merged"

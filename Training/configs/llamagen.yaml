@@ -1,0 +1,40 @@
+# LlamaGen.  Overrides general.yaml.
+backbone: "parti"
+display_name: "LlamaGen"
+pretrained_model_name_or_path: "jadohu/LlamaGen-T2I"
+trainer: "parti/train_dreambooth_lora_parti_robust_study.py"
+native_trainer: true
+# This trainer implements plain LoRA only, so there is no flag to pass.
+ord_lora_flag: false
+cli:
+  steps_flag: "--max_train_steps"
+  reg_loss_flag: "--org_loss_weights"
+lora:
+  # Plain LoRA: this trainer has no T-LoRA path.
+  scheme: "lora"          # tlora | lora
+train:
+  # Appendix A.1: batch size 4 for every backbone.
+  resolution: 256
+  learning_rate: "1e-4"
+  train_batch_size: 4
+  max_train_steps: 2500
+  rank: 64
+reg_ds:
+  image_size: 256
+  guidance_scale: 7.5
+
+loss:
+  # Table 6.  lambda_1 weights the regular-image term,
+  # lambda_2 the negative trigger term of Eq. 2.
+  reg_loss_weight: 1.25      # lambda_1
+  cp_ref_weight: 0.4        # lambda_2
+  # Baselines only - "Ours" keeps lambda_WatermarkDM at 0.
+  lambda_watermarkdm: 0.0
+  baselines:
+    dreambooth_lambda: 0.5
+    lambda_watermarkdm: 0.01
+
+roma:
+  enabled: false
+  r: 0.05
+  alpha: 0.5

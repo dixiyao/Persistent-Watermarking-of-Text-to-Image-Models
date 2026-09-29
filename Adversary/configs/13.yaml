@@ -1,0 +1,24 @@
+# Table 3, row 13: General / Full.
+index: 13
+name: "sd15_full_30k"
+paper:
+  table: 3
+  row: 13
+  modification: "General"
+  algorithm: "Full"
+  dataset: "5K theta_w samples"
+  rounds: "100K"
+  learning_rate: "2.5e-5"
+driver: "train_dreambooth_continue_loss_study.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  data_dir: "${REG_DATASET}"
+  learning_rate: "2.5e-5"
+  max_train_steps: 30000
+  integrity_interval: 1500
+  checkpointing_steps: 1500
+  checkpoints_total_limit: 20
+flags:
+  - "--full-tuning"

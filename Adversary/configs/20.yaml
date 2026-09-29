@@ -1,0 +1,26 @@
+# Table 3, row 20: Reset cross-attention / Custom Diffusion.
+index: 20
+name: "reset_cross_attn"
+paper:
+  table: 3
+  row: 20
+  modification: "Reset cross-attention"
+  algorithm: "Custom Diffusion"
+  dataset: "COCO14"
+  rounds: "20K"
+  learning_rate: "1e-5"
+driver: "train_dreambooth_continue_loss_study.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  data_dir: "${COCO_DATASET}"
+  learning_rate: "1e-5"
+  max_train_steps: 20000
+  integrity_interval: 1000
+  checkpointing_steps: 500
+  checkpoints_total_limit: 20
+  attention_reset: "cross_kv"
+  attention_reset_seed: 42
+flags:
+  - "--full-tuning"

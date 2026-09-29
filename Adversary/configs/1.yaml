@@ -1,0 +1,24 @@
+# Table 3, row 1: General / Full.
+index: 1
+name: "pokemon_full"
+paper:
+  table: 3
+  row: 1
+  modification: "General"
+  algorithm: "Full"
+  dataset: "Pokemon BLIP"
+  rounds: "15K"
+  learning_rate: "1e-5"
+driver: "train_dreambooth_continue_styletransfer_pokemon.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  dataset_cache_dir: "${HF_HOME}/datasets"
+  learning_rate: "1e-5"
+  max_train_steps: 30000
+  integrity_interval: 1500
+  checkpointing_steps: 1500
+  checkpoints_total_limit: 20
+flags:
+  - "--full-tuning"

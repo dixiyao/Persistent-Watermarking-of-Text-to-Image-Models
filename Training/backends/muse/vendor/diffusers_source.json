@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/huggingface/diffusers",
+  "revision": "0377f0c1b34e3ff313d41edad1bd79c2ed8bb5ec",
+  "source_path": "examples/amused/train_amused.py",
+  "upstream_sha256": "81c959b91185f00f6b2d2d6891547391d4877ad6a4f8873289f12df39435b377",
+  "adapted": true
+}

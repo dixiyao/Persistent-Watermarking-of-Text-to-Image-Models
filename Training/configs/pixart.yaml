@@ -1,0 +1,53 @@
+# PixArt-alpha.  Overrides general.yaml.
+backbone: "dit"
+display_name: "PixArt-alpha"
+pretrained_model_name_or_path: "PixArt-alpha/PixArt-XL-2-1024-MS"
+trainer: "dit/train_dreambooth_lora_pixart_robust_study.py"
+native_trainer: true
+cli:
+  steps_flag: "--max_train_steps"
+  reg_loss_flag: "--org_loss_weights"
+lora:
+  # T-LoRA, plus the Muon/AdamW split (see optimizer: below).
+  scheme: "tlora"          # tlora | lora
+train:
+  # Appendix A.1 specifies batch size 4, but batch 4 at 1024 px does not
+  # fit on a 40 GB card for this backbone. Micro-batch 1 with 4x the
+  # steps keeps the sample budget identical (4000 x 1 = 4 x 1000).
+  resolution: 1024
+  learning_rate: "1e-4"
+  train_batch_size: 1
+  max_train_steps: 4000
+  rank: 64
+reg_ds:
+  inference_steps: 20
+  guidance_scale: 4.5
+
+# PixArt-alpha is the only backbone whose trainer implements Muon.  Muon
+# updates the 2-D weight matrices; AdamW keeps everything else (embeddings,
+# norms, biases) at its own learning rate, so the two run side by side.
+# Left as adamw the run matches every other backbone.  Select it on the
+# command line with --optimizer muon.
+optimizer:
+  name: "adamw"                    # adamw | muon
+  muon:
+    learning_rate: "1e-3"          # Muon side; replaces train.learning_rate
+    adamw_learning_rate: "1e-4"    # AdamW side; the adamw train.learning_rate
+    momentum: 0.95
+    ns_steps: 5
+
+loss:
+  # Table 6.  lambda_1 weights the regular-image term,
+  # lambda_2 the negative trigger term of Eq. 2.
+  reg_loss_weight: 1.25      # lambda_1
+  cp_ref_weight: 0.25        # lambda_2
+  # Baselines only - "Ours" keeps lambda_WatermarkDM at 0.
+  lambda_watermarkdm: 0.0
+  baselines:
+    dreambooth_lambda: 0.75
+    lambda_watermarkdm: 0.001
+
+roma:
+  enabled: false
+  r: 0.05
+  alpha: 0.4

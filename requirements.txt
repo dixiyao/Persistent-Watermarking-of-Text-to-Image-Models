@@ -1,0 +1,34 @@
+# Pinned loosely: the trainers follow whatever diffusers release the
+# backbone needs.  Install torch for your own CUDA build first.
+torch>=2.4
+diffusers>=0.31
+transformers>=4.44
+accelerate>=0.34
+peft>=0.13
+safetensors
+datasets
+pyyaml
+pandas
+pillow
+numpy
+scipy
+tqdm
+clean-fid
+image-reward
+open_clip_torch
+
+# ---------------------------------------------------------------------------
+# LlamaGen backbone (--config llamagen) only.
+#
+# LlamaGen's trainer imports `autoregressive`, `language` and `tokenizer`.
+# These are packages inside the LlamaGen source tree, NOT on PyPI - there is
+# nothing to pip install, so they are listed here as a pointer, not as
+# requirements. Skip this whole block unless you are training LlamaGen; every
+# other backbone runs without it.
+#
+#   git clone https://github.com/FoundationVision/LlamaGen.git
+#   export PYTHONPATH="$PWD/LlamaGen:$PYTHONPATH"
+#
+# autoregressive   # from LlamaGen, not pip
+# language         # from LlamaGen, not pip
+# tokenizer        # from LlamaGen, not pip

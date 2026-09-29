@@ -1,0 +1,19 @@
+# Table 3, row 9: Quantization / Q-Diffusion INT8.
+# No separate stage - the transformation is applied at decode time by
+# the evaluation harness, through the flags below.
+index: 9
+name: "qdiffusion"
+paper:
+  table: 3
+  row: 9
+  modification: "Quantization"
+  algorithm: "Q-Diffusion INT8"
+  dataset: "5K theta_w samples"
+  rounds: "15K"
+  learning_rate: "1e-5"
+driver: null
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args: {}
+flags: []

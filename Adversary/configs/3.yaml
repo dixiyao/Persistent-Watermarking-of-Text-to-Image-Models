@@ -1,0 +1,21 @@
+# Table 3, row 3: Style transfer / LoRA.
+index: 3
+name: "naruto_style_lora"
+paper:
+  table: 3
+  row: 3
+  modification: "Style transfer"
+  algorithm: "LoRA"
+  dataset: "Naruto BLIP"
+  rounds: "15K"
+  learning_rate: "1e-4"
+driver: "train_dreambooth_continue_styletransfer.py"
+requires_two_models: false
+transform_only: false
+standalone_args: true
+args:
+  resolution: 512
+  integrity_interval: 100
+  checkpointing_steps: 500
+  checkpoints_total_limit: 4
+flags: []

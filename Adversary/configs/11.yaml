@@ -1,0 +1,19 @@
+# Table 3, row 11: Low-rank decomposition / SVDQuant.
+# No separate stage - the transformation is applied at decode time by
+# the evaluation harness, through the flags below.
+index: 11
+name: "svdquanti"
+paper:
+  table: 3
+  row: 11
+  modification: "Low-rank decomposition"
+  algorithm: "SVDQuant"
+  dataset: null
+  rounds: null
+  learning_rate: null
+driver: null
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args: {}
+flags: []

@@ -1,0 +1,19 @@
+# Table 3, row 10: Precision / BF16 -> FP16.
+# No training - a pure weight transformation of W_r.
+index: 10
+name: "precision_fp16"
+paper:
+  table: 3
+  row: 10
+  modification: "Precision"
+  algorithm: "BF16 -> FP16"
+  dataset: null
+  rounds: null
+  learning_rate: null
+driver: "precision_change.py"
+requires_two_models: false
+transform_only: true
+standalone_args: false
+args:
+  target_precision: "fp16"
+flags: []

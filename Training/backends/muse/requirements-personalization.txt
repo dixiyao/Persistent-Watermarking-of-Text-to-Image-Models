@@ -1,0 +1,2 @@
+# Shared isolated, pinned Diffusers/PEFT environment for official personalization.
+-r ../flux/requirements-dreambooth.txt

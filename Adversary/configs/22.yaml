@@ -1,0 +1,22 @@
+# Table 3, row 22: Trigger-phrase aware (out of scope) / Full, gradient ascent.
+# Out of scope: assumes the adversary knows the trigger phrase and
+# ascends the gradient of the copyright loss directly.
+index: 22
+name: "sam_cp_loss"
+paper:
+  table: 3
+  row: 22
+  modification: "Trigger-phrase aware (out of scope)"
+  algorithm: "Full, gradient ascent"
+  dataset: "Trigger dataset"
+  rounds: "100"
+  learning_rate: "1e-5"
+driver: "train_dreambooth_continue_sam.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  learning_rate: "1e-5"
+  max_train_steps: 100
+flags:
+  - "--full-tuning"

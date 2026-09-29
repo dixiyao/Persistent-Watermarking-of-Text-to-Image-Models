@@ -1,0 +1,19 @@
+# Table 3, row 17: VAE replacement / ClearVAE.
+# No separate stage - the transformation is applied at decode time by
+# the evaluation harness, through the flags below.
+index: 17
+name: "vaechange_clearvae"
+paper:
+  table: 3
+  row: 17
+  modification: "VAE replacement"
+  algorithm: "ClearVAE"
+  dataset: null
+  rounds: null
+  learning_rate: null
+driver: null
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args: {}
+flags: []

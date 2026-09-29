@@ -1,0 +1,42 @@
+# Table 3, row 5: Distillation / LCD.
+index: 5
+name: "lcm_distill"
+paper:
+  table: 3
+  row: 5
+  modification: "Distillation"
+  algorithm: "LCD"
+  dataset: "COCO14"
+  rounds: "50K"
+  learning_rate: "1e-5"
+driver: "train_lcm_distill_sd14.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  pretrained_teacher_model: "${BASE_MODEL}"
+  teacher_checkpoint: "${MERGED_MODEL}"
+  student_model: "${LCM_STUDENT}"
+  data_dir: "${REG_DATASET}"
+  output_dir: "${OUT}"
+  resolution: 512
+  train_batch_size: 1
+  gradient_accumulation_steps: 4
+  learning_rate: "1e-5"
+  max_train_steps: 20000
+  max_grad_norm: 1
+  mixed_precision: "bf16"
+  checkpointing_steps: 1250
+  checkpoints_total_limit: 4
+  num_ddim_timesteps: 50
+  w_min: 5
+  w_max: 15
+  ema_decay: 0.95
+  loss_type: "l2"
+  original_trigger_word: "[Z]*$"
+  current_trigger_word: "${TRIGGER}"
+flags:
+  - "--gradient_checkpointing"
+  - "--auto_resume_latest"
+custom_args: true
+post: "export_lcm_checkpoint.py"

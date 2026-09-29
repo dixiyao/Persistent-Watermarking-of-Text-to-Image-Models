@@ -1,0 +1,35 @@
+# Stable Diffusion v1.5.  Overrides general.yaml.
+backbone: "sd15"
+display_name: "Stable Diffusion v1.5"
+pretrained_model_name_or_path: "stable-diffusion-v1-5/stable-diffusion-v1-5"
+trainer: "train_dreambooth_lora_sdxl_robust_study.py"
+native_trainer: false
+cli:
+  steps_flag: "--step"
+  reg_loss_flag: "--org_loss_weight"
+lora:
+  # T-LoRA is the default; --ord_lora switches to plain LoRA.
+  scheme: "tlora"          # tlora | lora
+train:
+  # Appendix A.1: batch size 4 for every backbone.
+  resolution: 512
+  learning_rate: "1e-4"
+  train_batch_size: 4
+  max_train_steps: 1000
+  rank: 64
+
+loss:
+  # Table 6.  lambda_1 weights the regular-image term,
+  # lambda_2 the negative trigger term of Eq. 2.
+  reg_loss_weight: 1.25      # lambda_1
+  cp_ref_weight: 0.25        # lambda_2
+  # Baselines only - "Ours" keeps lambda_WatermarkDM at 0.
+  lambda_watermarkdm: 0.0
+  baselines:
+    dreambooth_lambda: 0.75
+    lambda_watermarkdm: 0.001
+
+roma:
+  enabled: false
+  r: 0.05
+  alpha: 0.5

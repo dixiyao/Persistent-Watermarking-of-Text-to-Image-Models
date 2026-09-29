@@ -1,0 +1,42 @@
+# PixelDiT.  Overrides general.yaml.
+backbone: "jit"
+display_name: "PixelDiT"
+pretrained_model_name_or_path: "nvidia/PixelDiT-1300M-1024px"
+trainer: "jit/train_dreambooth_lora_jit_robust_study.py"
+native_trainer: true
+# This trainer implements plain LoRA only, so there is no flag to pass.
+ord_lora_flag: false
+cli:
+  steps_flag: "--max_train_steps"
+  reg_loss_flag: "--org_loss_weights"
+lora:
+  # Plain LoRA: this trainer has no T-LoRA path.
+  scheme: "lora"          # tlora | lora
+train:
+  # Appendix A.1 specifies batch size 4, but batch 4 at 1024 px does not
+  # fit on a 40 GB card for this backbone. Micro-batch 1 with 4x the
+  # steps keeps the sample budget identical (4000 x 1 = 4 x 1000).
+  resolution: 1024
+  learning_rate: "2e-5"
+  train_batch_size: 1
+  max_train_steps: 4000
+  rank: 64
+reg_ds:
+  inference_steps: 50
+  guidance_scale: 2.75
+
+loss:
+  # Table 6.  lambda_1 weights the regular-image term,
+  # lambda_2 the negative trigger term of Eq. 2.
+  reg_loss_weight: 1.25      # lambda_1
+  cp_ref_weight: 0.25        # lambda_2
+  # Baselines only - "Ours" keeps lambda_WatermarkDM at 0.
+  lambda_watermarkdm: 0.0
+  baselines:
+    dreambooth_lambda: 0.75
+    lambda_watermarkdm: 0.001
+
+roma:
+  enabled: false
+  r: 0.05
+  alpha: 0.4

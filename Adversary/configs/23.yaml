@@ -1,0 +1,22 @@
+# Table 3, row 23: Merging two different theta_w (out of scope) / Korabandi et al. 2026.
+# Out of scope for the threat model of the paper: the adversary
+# needs a SECOND independently watermarked model.  Pass it with
+# --merged_model_b.
+# No training - a pure weight transformation of W_r.
+index: 23
+name: "merge_cp_models"
+paper:
+  table: 3
+  row: 23
+  modification: "Merging two different theta_w (out of scope)"
+  algorithm: "Korabandi et al. 2026"
+  dataset: null
+  rounds: null
+  learning_rate: null
+driver: "model_merge.py"
+requires_two_models: true
+transform_only: true
+standalone_args: false
+args:
+  weight_a: 0.5
+flags: []

@@ -1,0 +1,39 @@
+# Stable Diffusion XL.  Overrides general.yaml.
+# train_dreambooth_lora_sdxl_robust_study.py is natively SDXL: this is the
+# model its own defaults point at.
+backbone: "sdxl"
+display_name: "Stable Diffusion XL"
+pretrained_model_name_or_path: "stabilityai/stable-diffusion-xl-base-1.0"
+trainer: "train_dreambooth_lora_sdxl_robust_study.py"
+native_trainer: false
+cli:
+  steps_flag: "--step"
+  reg_loss_flag: "--org_loss_weight"
+lora:
+  # T-LoRA is the default; --ord_lora switches to plain LoRA.
+  scheme: "tlora"          # tlora | lora
+train:
+  # Appendix A.1 specifies batch size 4, but batch 4 at 1024 px does not
+  # fit on a 40 GB card for this backbone. Micro-batch 1 with 4x the
+  # steps keeps the sample budget identical (4000 x 1 = 4 x 1000).
+  resolution: 1024
+  learning_rate: "4e-4"
+  train_batch_size: 1
+  max_train_steps: 4000
+  rank: 64
+
+loss:
+  # Table 6.  lambda_1 weights the regular-image term,
+  # lambda_2 the negative trigger term of Eq. 2.
+  reg_loss_weight: 1.25      # lambda_1
+  cp_ref_weight: 0.25        # lambda_2
+  # Baselines only - "Ours" keeps lambda_WatermarkDM at 0.
+  lambda_watermarkdm: 0.0
+  baselines:
+    dreambooth_lambda: 0.25
+    lambda_watermarkdm: 0.001
+
+roma:
+  enabled: false
+  r: 0.05
+  alpha: 0.5

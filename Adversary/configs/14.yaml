@@ -1,0 +1,24 @@
+# Table 3, row 14: General / LoRA.
+index: 14
+name: "coco14_lora"
+paper:
+  table: 3
+  row: 14
+  modification: "General"
+  algorithm: "LoRA"
+  dataset: "COCO14"
+  rounds: "100K"
+  learning_rate: "1e-4"
+driver: "train_dreambooth_continue_loss_study.py"
+requires_two_models: false
+transform_only: false
+standalone_args: false
+args:
+  data_dir: "${COCO_DATASET}"
+  learning_rate: "1e-4"
+  max_train_steps: 30000
+  integrity_interval: 1500
+  te_lora_target_modules: ""
+  checkpointing_steps: 1500
+  checkpoints_total_limit: 20
+flags: []

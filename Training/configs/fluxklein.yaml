@@ -1,0 +1,45 @@
+# FLUX.2 Klein.  Overrides general.yaml.
+# A constant 1e-4 diverges on the 4B klein transformer, so the
+# learning rate warms up and decays instead.
+backbone: "flux"
+display_name: "FLUX.2 Klein"
+pretrained_model_name_or_path: "black-forest-labs/FLUX.2-klein-4B"
+trainer: "flux/train_dreambooth_lora_flux_robust_study.py"
+native_trainer: true
+cli:
+  steps_flag: "--max_train_steps"
+  reg_loss_flag: "--org_loss_weights"
+lora:
+  # Paper A.1 says plain LoRA. NOTE: this trainer only
+  # implements T-LoRA, so the paper setting is not reachable from a flag.
+  scheme: "lora"          # tlora | lora
+train:
+  # Appendix A.1 specifies batch size 4, but batch 4 at 1024 px does not
+  # fit on a 40 GB card for this backbone. Micro-batch 1 with 4x the
+  # steps keeps the sample budget identical (10000 x 1 = 4 x 2500).
+  resolution: 1024
+  learning_rate: "1e-4"
+  train_batch_size: 1
+  max_train_steps: 10000
+  rank: 64
+  lr_scheduler: "cosine"
+  lr_warmup_steps: 500
+reg_ds:
+  inference_steps: 4
+  guidance_scale: 1.0
+
+loss:
+  # Table 6.  lambda_1 weights the regular-image term,
+  # lambda_2 the negative trigger term of Eq. 2.
+  reg_loss_weight: 1.0      # lambda_1
+  cp_ref_weight: 0.15        # lambda_2
+  # Baselines only - "Ours" keeps lambda_WatermarkDM at 0.
+  lambda_watermarkdm: 0.0
+  baselines:
+    dreambooth_lambda: 0.5
+    lambda_watermarkdm: 0.0001
+
+roma:
+  enabled: false
+  r: 0.025
+  alpha: 0.4
