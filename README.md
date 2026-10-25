@@ -1,6 +1,6 @@
 # Persistent Watermarking of Text-to-Image Models
 
-Code for *Persistent Watermarking of Text-to-Image Models*.
+Code for [*Persistent Watermarking of Text-to-Image Models*](https://arxiv.org/abs/2609.39024).
 
 ![Workflow](figures/workflow.png)
 
